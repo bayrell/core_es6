@@ -17,56 +17,61 @@
  *  limitations under the License.
  */
 if (typeof Core == 'undefined') Core = {};
-if (typeof Core.Http == 'undefined') Core.Http = {};
-Core.Http.ApiRequest = class extends Runtime.CoreStruct{
+if (typeof Core.UI == 'undefined') Core.UI = {};
+if (typeof Core.UI.Annotations == 'undefined') Core.UI.Annotations = {};
+Core.UI.Annotations.AnnotationEvent = class extends Runtime.CoreStruct{
 	/**
-	 * Assing request
-	 * @param Request request
-	 * @param ApiRequest req
-	 * @return ApiRequest
+	 * OnEvent
 	 */
-	static assignRequest(req, request){
-		if (request == null){
-			return ;
+	events(){
+		return (new Runtime.Vector());
+	}
+	/**
+	 * OnEvent
+	 */
+	static onEvent(manager, e){
+	}
+	/**
+	 * Factory onEvent
+	 */
+	static onEventFactory(manager, ui, annotation){
+		return (event) => {
+			var ui_event = new Core.UI.UIEvent((new Runtime.Map()).set("annotation", annotation).set("event", event).set("ui", ui));
+			this.onEvent(manager, ui_event);
 		}
-		var data = new Runtime.Map();
-		/* Get data */
-		request.payload.each((key, value) => {
-			data.set(key, value);
-		});
-		return req.copy((new Runtime.Map()).set("data", data));
+	}
+	/**
+	 * Add Emitter
+	 */
+	static addEmitter(manager, emitter, ui, annotation){
+	}
+	/**
+	 * Dispatch Event
+	 */
+	static dispatch(manager, ui, annotation, event, ref){
+		if (ref == undefined) ref=null;
+		var ui_event = new Core.UI.UIEvent((new Runtime.Map()).set("annotation", annotation).set("event", event).set("ref", ref).set("ui", ui));
+		this.onEvent(manager, ui_event);
 	}
 	/* ======================= Class Init Functions ======================= */
-	getClassName(){return "Core.Http.ApiRequest";}
-	static getCurrentNamespace(){return "Core.Http";}
-	static getCurrentClassName(){return "Core.Http.ApiRequest";}
+	getClassName(){return "Core.UI.Annotations.AnnotationEvent";}
+	static getCurrentNamespace(){return "Core.UI.Annotations";}
+	static getCurrentClassName(){return "Core.UI.Annotations.AnnotationEvent";}
 	static getParentClassName(){return "Runtime.CoreStruct";}
-	_init(){
-		super._init();
-		var names = Object.getOwnPropertyNames(this);
-		this.__data = null;
-		if (names.indexOf("data") == -1)Object.defineProperty(this, "data", { get: function() { return this.__data; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("data") }});
-	}
 	assignObject(obj){
-		if (obj instanceof Core.Http.ApiRequest){
-			this.__data = obj.__data;
+		if (obj instanceof Core.UI.Annotations.AnnotationEvent){
 		}
 		super.assignObject(obj);
 	}
 	assignValue(variable_name, value, sender){if(sender==undefined)sender=null;
-		if (variable_name == "data")this.__data = Runtime.rtl.convert(value,"Runtime.Dict",null,"mixed");
-		else super.assignValue(variable_name, value, sender);
+		super.assignValue(variable_name, value, sender);
 	}
 	takeValue(variable_name, default_value){
 		if (default_value == undefined) default_value = null;
-		if (variable_name == "data") return this.__data;
 		return super.takeValue(variable_name, default_value);
 	}
 	static getFieldsList(names, flag){
 		if (flag==undefined)flag=0;
-		if ((flag | 3)==3){
-			names.push("data");
-		}
 	}
 	static getFieldInfoByName(field_name){
 		return null;

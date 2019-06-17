@@ -1,6 +1,6 @@
 "use strict;"
 /*!
- *  Bayrell Runtime Library
+ *  Bayrell Core Library
  *
  *  (c) Copyright 2016-2018 "Ildar Bikmamatov" <support@bayrell.org>
  *
@@ -8,7 +8,7 @@
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *      https://www.bayrell.org/licenses/APACHE-LICENSE-2.0.html
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,29 +16,41 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-if (typeof RuntimeUI == 'undefined') RuntimeUI = {};
-if (typeof RuntimeUI.Interfaces == 'undefined') RuntimeUI.Interfaces = {};
-RuntimeUI.Interfaces.AssetsInterface = class{
+if (typeof Core == 'undefined') Core = {};
+if (typeof Core.Interfaces == 'undefined') Core.Interfaces = {};
+Core.Interfaces.AssetsInterface = class{
+	/**
+	 * Returns module name
+	 * @return string
+	 */
+	static getModuleName(){
+	}
+	/**
+	 * Returns required modules
+	 * @return Dict<string>
+	 */
+	static requiredModules(){
+	}
+	/**
+	 * Returns module files load order
+	 * @return Collection<string>
+	 */
+	static getModuleFiles(){
+	}
 	/**
 	 * Returns required assets
-	 * @return Vector<string>
+	 * @return Collection<string>
 	 */
-	static getRequiredAssets(context){
+	static assets(container){
 	}
 	/**
 	 * Returns sync loaded files
 	 */
-	static assetsSyncLoad(context){
-	}
-	/**
-	 * Returns async loaded files
-	 */
-	static assetsAsyncLoad(context){
+	static resources(container){
 	}
 	/**
 	 * Init render container
 	 */
 	static initContainer(container){
 	}
-	/* ======================= Class Init Functions ======================= */
 }

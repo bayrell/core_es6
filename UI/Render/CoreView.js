@@ -17,56 +17,54 @@
  *  limitations under the License.
  */
 if (typeof Core == 'undefined') Core = {};
-if (typeof Core.Http == 'undefined') Core.Http = {};
-Core.Http.ApiRequest = class extends Runtime.CoreStruct{
+if (typeof Core.UI == 'undefined') Core.UI = {};
+if (typeof Core.UI.Render == 'undefined') Core.UI.Render = {};
+Core.UI.Render.CoreView = class extends Runtime.CoreStruct{
 	/**
-	 * Assing request
-	 * @param Request request
-	 * @param ApiRequest req
-	 * @return ApiRequest
+	 * Returns module name
 	 */
-	static assignRequest(req, request){
-		if (request == null){
-			return ;
-		}
-		var data = new Runtime.Map();
-		/* Get data */
-		request.payload.each((key, value) => {
-			data.set(key, value);
-		});
-		return req.copy((new Runtime.Map()).set("data", data));
+	static moduleName(){
+		return this.getCurrentNamespace();
+	}
+	/**
+	 * Returns module description
+	 */
+	static moduleDescription(){
+		return Runtime.rtl.toString(this.moduleName())+".ModuleDescription";
+	}
+	/**
+	 * Returns manager name
+	 */
+	static managerName(){
+		/*rtl::dump( static::getCurrentClassName() );*/
+		return Runtime.rtl.method(this.moduleDescription(), "componentManagerName")();
+	}
+	/**
+	 * Returns model name
+	 */
+	static modelName(){
+		/*rtl::dump( static::getCurrentClassName() );*/
+		return Runtime.rtl.method(this.moduleDescription(), "componentModelName")();
 	}
 	/* ======================= Class Init Functions ======================= */
-	getClassName(){return "Core.Http.ApiRequest";}
-	static getCurrentNamespace(){return "Core.Http";}
-	static getCurrentClassName(){return "Core.Http.ApiRequest";}
+	getClassName(){return "Core.UI.Render.CoreView";}
+	static getCurrentNamespace(){return "Core.UI.Render";}
+	static getCurrentClassName(){return "Core.UI.Render.CoreView";}
 	static getParentClassName(){return "Runtime.CoreStruct";}
-	_init(){
-		super._init();
-		var names = Object.getOwnPropertyNames(this);
-		this.__data = null;
-		if (names.indexOf("data") == -1)Object.defineProperty(this, "data", { get: function() { return this.__data; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("data") }});
-	}
 	assignObject(obj){
-		if (obj instanceof Core.Http.ApiRequest){
-			this.__data = obj.__data;
+		if (obj instanceof Core.UI.Render.CoreView){
 		}
 		super.assignObject(obj);
 	}
 	assignValue(variable_name, value, sender){if(sender==undefined)sender=null;
-		if (variable_name == "data")this.__data = Runtime.rtl.convert(value,"Runtime.Dict",null,"mixed");
-		else super.assignValue(variable_name, value, sender);
+		super.assignValue(variable_name, value, sender);
 	}
 	takeValue(variable_name, default_value){
 		if (default_value == undefined) default_value = null;
-		if (variable_name == "data") return this.__data;
 		return super.takeValue(variable_name, default_value);
 	}
 	static getFieldsList(names, flag){
 		if (flag==undefined)flag=0;
-		if ((flag | 3)==3){
-			names.push("data");
-		}
 	}
 	static getFieldInfoByName(field_name){
 		return null;

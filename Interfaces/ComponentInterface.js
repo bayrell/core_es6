@@ -18,11 +18,54 @@
  */
 if (typeof Core == 'undefined') Core = {};
 if (typeof Core.Interfaces == 'undefined') Core.Interfaces = {};
-Core.Interfaces.FrontendInterface = class{
+Core.Interfaces.ComponentInterface = class{
 	/**
 	 * Returns module name
 	 * @return string
 	 */
-	static getName(){
+	static getModuleName(){
+	}
+	/**
+	 * Returns required modules
+	 * @return Dict<string>
+	 */
+	static requiredModules(){
+	}
+	/**
+	 * Returns module files load order
+	 * @return Collection<string>
+	 */
+	static getModuleFiles(){
+	}
+	/**
+	 * Returns manager name
+	 */
+	static componentManagerName(){
+	}
+	/**
+	 * Returns model name
+	 */
+	static componentModelName(){
+	}
+	/**
+	 * Returns model name
+	 */
+	static componentViewName(){
+	}
+	/**
+	 * Returns required assets
+	 * @return Collection<string>
+	 */
+	static assets(container){
+	}
+	/**
+	 * Returns sync loaded files
+	 */
+	static resources(container){
+	}
+	/**
+	 * Init render container
+	 */
+	static initContainer(container){
 	}
 }

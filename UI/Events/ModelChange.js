@@ -17,55 +17,39 @@
  *  limitations under the License.
  */
 if (typeof Core == 'undefined') Core = {};
-if (typeof Core.Http == 'undefined') Core.Http = {};
-Core.Http.JsonResponse = class extends Core.Http.Response{
-	/**
-	 * Init struct data
-	 */
-	initData(){
-		var headers = this.headers;
-		if (headers == null){
-			headers = new Runtime.Dict();
-		}
-		headers = headers.setIm("Content-Type", "application/json");
-		this.assignValue("headers", headers);
-	}
-	/**
-	 * Returns content
-	 */
-	getContent(){
-		return Runtime.rtl.json_encode(this.data);
-	}
+if (typeof Core.UI == 'undefined') Core.UI = {};
+if (typeof Core.UI.Events == 'undefined') Core.UI.Events = {};
+Core.UI.Events.ModelChange = class extends Runtime.CoreEvent{
 	/* ======================= Class Init Functions ======================= */
-	getClassName(){return "Core.Http.JsonResponse";}
-	static getCurrentNamespace(){return "Core.Http";}
-	static getCurrentClassName(){return "Core.Http.JsonResponse";}
-	static getParentClassName(){return "Core.Http.Response";}
+	getClassName(){return "Core.UI.Events.ModelChange";}
+	static getCurrentNamespace(){return "Core.UI.Events";}
+	static getCurrentClassName(){return "Core.UI.Events.ModelChange";}
+	static getParentClassName(){return "Runtime.CoreEvent";}
 	_init(){
 		super._init();
 		var names = Object.getOwnPropertyNames(this);
-		this.__data = new Runtime.Dict();
-		if (names.indexOf("data") == -1)Object.defineProperty(this, "data", { get: function() { return this.__data; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("data") }});
+		this.__model = null;
+		if (names.indexOf("model") == -1)Object.defineProperty(this, "model", { get: function() { return this.__model; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("model") }});
 	}
 	assignObject(obj){
-		if (obj instanceof Core.Http.JsonResponse){
-			this.__data = obj.__data;
+		if (obj instanceof Core.UI.Events.ModelChange){
+			this.__model = obj.__model;
 		}
 		super.assignObject(obj);
 	}
 	assignValue(variable_name, value, sender){if(sender==undefined)sender=null;
-		if (variable_name == "data")this.__data = Runtime.rtl.convert(value,"Runtime.Dict",new Runtime.Dict(),"primitive");
+		if (variable_name == "model")this.__model = Runtime.rtl.convert(value,"Runtime.CoreStruct",null,"");
 		else super.assignValue(variable_name, value, sender);
 	}
 	takeValue(variable_name, default_value){
 		if (default_value == undefined) default_value = null;
-		if (variable_name == "data") return this.__data;
+		if (variable_name == "model") return this.__model;
 		return super.takeValue(variable_name, default_value);
 	}
 	static getFieldsList(names, flag){
 		if (flag==undefined)flag=0;
 		if ((flag | 3)==3){
-			names.push("data");
+			names.push("model");
 		}
 	}
 	static getFieldInfoByName(field_name){

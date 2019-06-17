@@ -1,14 +1,14 @@
 "use strict;"
 /*!
- *  Bayrell Runtime Library
+ *  Bayrell Core Library
  *
- *  (c) Copyright 2018 "Ildar Bikmamatov" <support@bayrell.org>
+ *  (c) Copyright 2018-2019 "Ildar Bikmamatov" <support@bayrell.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
- *      https://www.bayrell.org/licenses/APACHE-LICENSE-2.0.html
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-if (typeof RuntimeUI == 'undefined') RuntimeUI = {};
-if (typeof RuntimeUI.Http == 'undefined') RuntimeUI.Http = {};
-RuntimeUI.Http.Request = class extends Runtime.CoreStruct{
+if (typeof Core == 'undefined') Core = {};
+if (typeof Core.Http == 'undefined') Core.Http = {};
+Core.Http.Request = class extends Runtime.CoreStruct{
+	/**
+	 * Send response
+	 * @return Response res
+	 */
+	static createPHPRequest(){
+		var r = null;
+		return r;
+	}
 	/* ======================= Class Init Functions ======================= */
-	getClassName(){return "RuntimeUI.Http.Request";}
-	static getCurrentClassName(){return "RuntimeUI.Http.Request";}
+	getClassName(){return "Core.Http.Request";}
+	static getCurrentNamespace(){return "Core.Http";}
+	static getCurrentClassName(){return "Core.Http.Request";}
 	static getParentClassName(){return "Runtime.CoreStruct";}
 	_init(){
 		super._init();
+		var names = Object.getOwnPropertyNames(this);
 		this.METHOD_GET = "GET";
 		this.METHOD_HEAD = "HEAD";
 		this.METHOD_POST = "POST";
@@ -35,26 +45,26 @@ RuntimeUI.Http.Request = class extends Runtime.CoreStruct{
 		this.METHOD_TRACE = "TRACE";
 		this.METHOD_PATCH = "PATCH";
 		this.__uri = "";
-		Object.defineProperty(this, "uri", { get: function() { return this.__uri; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("uri") }});
+		if (names.indexOf("uri") == -1)Object.defineProperty(this, "uri", { get: function() { return this.__uri; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("uri") }});
 		this.__host = "";
-		Object.defineProperty(this, "host", { get: function() { return this.__host; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("host") }});
+		if (names.indexOf("host") == -1)Object.defineProperty(this, "host", { get: function() { return this.__host; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("host") }});
 		this.__method = "GET";
-		Object.defineProperty(this, "method", { get: function() { return this.__method; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("method") }});
+		if (names.indexOf("method") == -1)Object.defineProperty(this, "method", { get: function() { return this.__method; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("method") }});
 		this.__query = null;
-		Object.defineProperty(this, "query", { get: function() { return this.__query; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("query") }});
+		if (names.indexOf("query") == -1)Object.defineProperty(this, "query", { get: function() { return this.__query; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("query") }});
 		this.__payload = null;
-		Object.defineProperty(this, "payload", { get: function() { return this.__payload; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("payload") }});
+		if (names.indexOf("payload") == -1)Object.defineProperty(this, "payload", { get: function() { return this.__payload; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("payload") }});
 		this.__cookies = null;
-		Object.defineProperty(this, "cookies", { get: function() { return this.__cookies; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("cookies") }});
+		if (names.indexOf("cookies") == -1)Object.defineProperty(this, "cookies", { get: function() { return this.__cookies; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("cookies") }});
 		this.__headers = null;
-		Object.defineProperty(this, "headers", { get: function() { return this.__headers; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("headers") }});
+		if (names.indexOf("headers") == -1)Object.defineProperty(this, "headers", { get: function() { return this.__headers; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("headers") }});
 		this.__params = null;
-		Object.defineProperty(this, "params", { get: function() { return this.__params; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("params") }});
+		if (names.indexOf("params") == -1)Object.defineProperty(this, "params", { get: function() { return this.__params; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("params") }});
 		this.__start_time = 0;
-		Object.defineProperty(this, "start_time", { get: function() { return this.__start_time; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("start_time") }});
+		if (names.indexOf("start_time") == -1)Object.defineProperty(this, "start_time", { get: function() { return this.__start_time; }, set: function(value) { throw new Runtime.Exceptions.AssignStructValueError("start_time") }});
 	}
 	assignObject(obj){
-		if (obj instanceof RuntimeUI.Http.Request){
+		if (obj instanceof Core.Http.Request){
 			this.__uri = obj.__uri;
 			this.__host = obj.__host;
 			this.__method = obj.__method;
@@ -72,7 +82,7 @@ RuntimeUI.Http.Request = class extends Runtime.CoreStruct{
 		else if (variable_name == "host")this.__host = Runtime.rtl.convert(value,"string","","");
 		else if (variable_name == "method")this.__method = Runtime.rtl.convert(value,"string","GET","");
 		else if (variable_name == "query")this.__query = Runtime.rtl.convert(value,"Runtime.Dict",null,"string");
-		else if (variable_name == "payload")this.__payload = Runtime.rtl.convert(value,"Runtime.Dict",null,"string");
+		else if (variable_name == "payload")this.__payload = Runtime.rtl.convert(value,"Runtime.Dict",null,"mixed");
 		else if (variable_name == "cookies")this.__cookies = Runtime.rtl.convert(value,"Runtime.Dict",null,"string");
 		else if (variable_name == "headers")this.__headers = Runtime.rtl.convert(value,"Runtime.Dict",null,"string");
 		else if (variable_name == "params")this.__params = Runtime.rtl.convert(value,"Runtime.Dict",null,"string");
@@ -109,13 +119,18 @@ RuntimeUI.Http.Request = class extends Runtime.CoreStruct{
 	static getFieldInfoByName(field_name){
 		return null;
 	}
+	static getMethodsList(names){
+	}
+	static getMethodInfoByName(method_name){
+		return null;
+	}
 }
-RuntimeUI.Http.Request.METHOD_GET = "GET";
-RuntimeUI.Http.Request.METHOD_HEAD = "HEAD";
-RuntimeUI.Http.Request.METHOD_POST = "POST";
-RuntimeUI.Http.Request.METHOD_PUT = "PUT";
-RuntimeUI.Http.Request.METHOD_DELETE = "DELETE";
-RuntimeUI.Http.Request.METHOD_CONNECT = "CONNECT";
-RuntimeUI.Http.Request.METHOD_OPTIONS = "OPTIONS";
-RuntimeUI.Http.Request.METHOD_TRACE = "TRACE";
-RuntimeUI.Http.Request.METHOD_PATCH = "PATCH";
+Core.Http.Request.METHOD_GET = "GET";
+Core.Http.Request.METHOD_HEAD = "HEAD";
+Core.Http.Request.METHOD_POST = "POST";
+Core.Http.Request.METHOD_PUT = "PUT";
+Core.Http.Request.METHOD_DELETE = "DELETE";
+Core.Http.Request.METHOD_CONNECT = "CONNECT";
+Core.Http.Request.METHOD_OPTIONS = "OPTIONS";
+Core.Http.Request.METHOD_TRACE = "TRACE";
+Core.Http.Request.METHOD_PATCH = "PATCH";
